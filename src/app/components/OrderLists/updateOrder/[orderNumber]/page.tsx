@@ -33,11 +33,12 @@ interface UpdateOrderProps {
     closeModal: () => void;
 }
 
-const UpdateOrder: React.FC<UpdateOrderProps> = ({ order, closeModal }) => {
+const UpdateOrder = ({ order, closeModal }: UpdateOrderProps) => {
     const [updatedOrder, setUpdatedOrder] = useState<Order>(order);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+
 
     // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

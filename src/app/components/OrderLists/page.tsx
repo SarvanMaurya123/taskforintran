@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import UpdateOrder from '@/app/components/OrderLists/updateOrder/[orderNumber]/page';
 import Loader from '../Loder';
 
-
 interface Customer {
     name: string;
     phone: string;
@@ -59,6 +58,12 @@ const OrderLists = () => {
             setOrders(orders.filter(order => order.orderNumber !== orderNumber));
         } catch (error) {
             setError('Failed to delete order');
+        }
+    };
+
+    const confirmDelete = (orderNumber: string) => {
+        if (window.confirm('Are you sure you want to delete this order?')) {
+            deleteOrder(orderNumber);
         }
     };
 
@@ -115,7 +120,7 @@ const OrderLists = () => {
                                     {order.status}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <button onClick={() => deleteOrder(order.orderNumber)} className="text-red-500 hover:text-red-700">
+                                    <button onClick={() => confirmDelete(order.orderNumber)} className="text-red-500 hover:text-red-700">
                                         <FaTrash />
                                     </button>
                                 </td>
@@ -131,8 +136,10 @@ const OrderLists = () => {
             </div>
 
             {isModalOpen && selectedOrder && (
-                <div className="modal">
-                    <UpdateOrder order={selectedOrder} closeModal={closeModal} />
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <UpdateOrder order={selectedOrder} closeModal={closeModal} />
+                    </div>
                 </div>
             )}
         </div>

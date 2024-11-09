@@ -7,6 +7,7 @@ const Dashboard = () => {
     const [allAssignments, setAllAssignments] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>('');
+    const [isClient, setIsClient] = useState(false)
 
     // Fetching the assignment metrics data from the first API
     const fetchMetricsData = async () => {
@@ -38,6 +39,7 @@ const Dashboard = () => {
 
     // Fetch both metrics and all assignments when component mounts
     useEffect(() => {
+        setIsClient(true);
         const fetchData = async () => {
             setLoading(true); // Start loading
             await Promise.all([fetchMetricsData(), fetchAllAssignments()]);
@@ -49,7 +51,9 @@ const Dashboard = () => {
     // Prevent rendering until data is fetched (only on the client-side)
     if (loading) return <Loader />;
     if (error) return <p className="text-red-500 text-center mt-4">{error}</p>;
-
+    if (!isClient) {
+        return null
+    }
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
             <h1 className="text-4xl font-extrabold mb-6 text-center text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">

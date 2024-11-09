@@ -17,9 +17,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        await connect();  // Ensure connection to the database
-
-        // Parse the incoming request body
+        await connect();
         const data = await request.json();
 
         // Validate the incoming data (Optional, but recommended)
@@ -30,10 +28,8 @@ export async function POST(request: Request) {
         // Create a new partner instance using the validated data
         const partner = new DeliveryPartner(data);
 
-        // Save the partner to the database
-        await partner.save();
 
-        // Return the created partner as a JSON response with status 201 (Created)
+        await partner.save();
         return NextResponse.json(partner, { status: 201 });
     } catch (error) {
         console.error(error);  // Log the error for debugging purposes

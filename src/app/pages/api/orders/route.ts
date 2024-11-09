@@ -19,9 +19,9 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        await connect(); // Ensure that you're connecting to MongoDB before handling the request
+        await connect();
 
-        const data = await request.json(); // Parse the incoming JSON body
+        const data = await request.json();
 
         // Validate the incoming order data
         if (

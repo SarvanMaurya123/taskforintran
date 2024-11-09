@@ -13,8 +13,8 @@ const Homedata = () => {
 
     return (
         <>
-            <header className="bg-slate-500 h-16 flex items-center justify-between px-4 sm:px-6 md:px-8">
-                <div className="text-white text-2xl font-bold">Logo</div>
+            <header className="bg-slate-500 h-20 flex items-center justify-between px-4 sm:px-6 md:px-8">
+                <div className="text-white text-2xl font-bold ml-10">Logo</div>
 
                 {/* Hamburger Icon for Mobile */}
                 <div className="lg:hidden">
@@ -25,25 +25,25 @@ const Homedata = () => {
 
                 {/* Navigation Menu */}
                 <nav className={`lg:flex ${isMobileMenuOpen ? 'block' : 'hidden'} lg:block`}>
-                    <ul className="flex space-x-8 text-lg font-medium text-white hidden md:block">
+                    <ul className="flex space-x-8 text-lg font-medium text-white">
                         <li>
                             <Link href="/components/Home/order">
-                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center">Order Please</p>
+                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center hidden md:block">Order Please</p>
                             </Link>
                         </li>
                         <li>
                             <Link href="/components/Home/partners">
-                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center">Partners</p>
+                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center hidden md:block">Partners</p>
                             </Link>
                         </li>
                         <li>
                             <Link href="/components/Home/assignments">
-                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center">Assignments</p>
+                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center hidden md:block">Assignments</p>
                             </Link>
                         </li>
                         <li>
                             <Link href="/components/Home/assignmentmatiral">
-                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center">AssignmentsMatiral</p>
+                                <p className="hover:text-indigo-300 transition-colors duration-300 text-center hidden md:block">AssignmentsMatiral</p>
                             </Link>
                         </li>
                     </ul>

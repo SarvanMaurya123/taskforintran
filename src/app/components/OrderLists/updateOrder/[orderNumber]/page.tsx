@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'; // Correct import for next/navigation
+import Loader from '@/app/components/Loder';
 
 // Define types
 interface Customer {
@@ -32,8 +33,8 @@ interface UpdateOrderProps {
     closeModal: () => void;
 }
 
-const UpdateOrder = ({ order, closeModal }: UpdateOrderProps) => {
-    const [updatedOrder, setUpdatedOrder] = useState<Order>(order); // Use the passed `order` prop for state initialization
+const UpdateOrder: React.FC<UpdateOrderProps> = ({ order, closeModal }) => {
+    const [updatedOrder, setUpdatedOrder] = useState<Order>(order);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
@@ -65,7 +66,7 @@ const UpdateOrder = ({ order, closeModal }: UpdateOrderProps) => {
         }
     };
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <p className="text-red-500">{error}</p>;
 
     return (

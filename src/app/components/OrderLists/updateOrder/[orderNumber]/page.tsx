@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Correct import for next/navigation
+import { useRouter, useParams } from 'next/navigation'; // Import both useRouter and useParams
 import Loader from '@/app/components/Loder';
 
 // Define types
@@ -37,19 +37,27 @@ const UpdateOrder = ({ order, closeModal }: UpdateOrderProps) => {
     const [updatedOrder, setUpdatedOrder] = useState<Order>(order);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
+    const router = useRouter(); // Define the router instance here
+    const { orderNumber } = useParams(); // Use useParams to get dynamic route parameters
 
     // Handle input changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
 
         // Update the corresponding field in the nested `order` object
-        setUpdatedOrder(prevOrder => ({
-            ...prevOrder,
-            [name]: value,
-            customer: name.startsWith('customer') ? { ...prevOrder.customer, [name.replace('customer', '').toLowerCase()]: value } : prevOrder.customer
-        }));
+        if (name.startsWith('customer')) {
+            const customerKey = name.replace('customer', '').toLowerCase() as keyof Customer;
+            setUpdatedOrder(prevOrder => ({
+                ...prevOrder,
+                customer: { ...prevOrder.customer, [customerKey]: value },
+            }));
+        } else {
+            setUpdatedOrder(prevOrder => ({
+                ...prevOrder,
+                [name]: value,
+            }));
+        }
     };
 
     // Handle form submission

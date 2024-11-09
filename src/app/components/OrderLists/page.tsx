@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa'; // Import trash icon for delete button
 import { useRouter } from 'next/navigation';
-import UpdateOrder from './updateOrder/[orderNumber]/page';
+import UpdateOrder from '@/app/components/OrderLists/updateOrder/[orderNumber]/page';
 import Loader from '../Loder';
 
 

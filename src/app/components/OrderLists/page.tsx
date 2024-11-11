@@ -2,13 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
+
 import Loader from '../Loder';
 
-const UpdateOrder = dynamic(() => import('@/app/components/OrderLists/updateOrder/[orderNumber]/page'), {
-    ssr: false, // Disable SSR for the modal
-});
+import UpdateOrder from '@/app/components/OrderLists/updateOrder/[orderNumber]/page';
 
 interface Customer {
     name: string;
@@ -38,6 +35,13 @@ const OrderLists = () => {
     const [error, setError] = useState<string | null>(null);
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Store the selected order number in sessionStorage when it's updated
+    useEffect(() => {
+        if (selectedOrder) {
+            sessionStorage.setItem('orderNumber', selectedOrder.orderNumber);
+        }
+    }, [selectedOrder]);
 
     useEffect(() => {
         fetchOrders();
@@ -140,7 +144,7 @@ const OrderLists = () => {
 
             {/* Modal */}
             {isModalOpen && selectedOrder && (
-                <UpdateOrder orderNumber={selectedOrder.orderNumber} closeModal={closeModal} />
+                <UpdateOrder closeModal={closeModal} />
             )}
         </div>
     );

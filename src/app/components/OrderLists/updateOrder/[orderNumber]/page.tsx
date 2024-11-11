@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Loader from '@/app/components/Loder';
 
 interface Customer {
@@ -27,22 +27,22 @@ interface Order {
 }
 
 interface UpdateOrderProps {
-    orderNumber: string;
     closeModal: () => void;
 }
 
-const UpdateOrder: React.FC<UpdateOrderProps> = ({ orderNumber, closeModal }) => {
+const UpdateOrder: React.FC<UpdateOrderProps> = ({ closeModal }) => {
     const [updatedOrder, setUpdatedOrder] = useState<Order | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const router = useRouter();
-
+    const orderNumber = sessionStorage.getItem('orderNumber');
     useEffect(() => {
         const fetchOrder = async () => {
             try {
                 console.log("orderNumber:", orderNumber)
                 const response = await axios.get(`/pages/api/orders/${orderNumber}`);
+                console.log("response:", response)
                 setUpdatedOrder(response.data);
             } catch (err) {
                 setError('Failed to fetch order details');

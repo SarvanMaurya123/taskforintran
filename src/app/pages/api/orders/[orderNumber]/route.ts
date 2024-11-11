@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import mongoose from 'mongoose';
 import { connect } from '@/app/utils/db';
 import Order from '@/app/models/Order';
 
@@ -49,5 +48,22 @@ export async function DELETE(request: Request, { params }: { params: { orderNumb
     } catch (error) {
         console.error('Error deleting order:', error);
         return NextResponse.json({ error: 'Failed to delete order' }, { status: 500 });
+    }
+}
+
+
+export async function GET(request: Request, { params }: { params: { orderNumber: string } }) {
+    try {
+        await connect();
+
+        const orderNumber = params; // Directly access orderNumber without await in destructuring
+        // console.log("orderNumber:", orderNumber);
+
+        const orders = await Order.find({ orderNumber });
+
+        return NextResponse.json(orders);
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });
     }
 }

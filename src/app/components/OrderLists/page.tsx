@@ -1,10 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaTrash } from 'react-icons/fa'; // Import trash icon for delete button
+import { FaTrash } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-import UpdateOrder from '@/app/components/OrderLists/updateOrder/[orderNumber]/page';
+import dynamic from 'next/dynamic';
 import Loader from '../Loder';
+
+const UpdateOrder = dynamic(() => import('@/app/components/OrderLists/updateOrder/[orderNumber]/page'), {
+    ssr: false, // Disable SSR for the modal
+});
 
 interface Customer {
     name: string;
@@ -34,7 +38,6 @@ const OrderLists = () => {
     const [error, setError] = useState<string | null>(null);
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const router = useRouter(); // Initialize router
 
     useEffect(() => {
         fetchOrders();
@@ -43,7 +46,7 @@ const OrderLists = () => {
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('/pages/api/orders');
+            const response = await axios.get('/pages/api/orders'); // Correct API route
             setOrders(response.data);
         } catch (error) {
             setError('Failed to load orders');
@@ -54,7 +57,7 @@ const OrderLists = () => {
 
     const deleteOrder = async (orderNumber: string) => {
         try {
-            await axios.delete(`/pages/api/orders/${orderNumber}`);
+            await axios.delete(`/api/orders/${orderNumber}`); // Correct API route
             setOrders(orders.filter(order => order.orderNumber !== orderNumber));
         } catch (error) {
             setError('Failed to delete order');
@@ -135,12 +138,9 @@ const OrderLists = () => {
                 </table>
             </div>
 
+            {/* Modal */}
             {isModalOpen && selectedOrder && (
-                <div className="modal-overlay" onClick={closeModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <UpdateOrder order={selectedOrder} closeModal={closeModal} />
-                    </div>
-                </div>
+                <UpdateOrder orderNumber={selectedOrder.orderNumber} closeModal={closeModal} />
             )}
         </div>
     );

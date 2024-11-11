@@ -52,18 +52,16 @@ export async function DELETE(request: Request, { params }: { params: { orderNumb
 }
 
 
-export async function GET(request: Request, { params }: { params: { orderNumber: string } }) {
-    try {
-        await connect();
+// export async function GET(request: Request, { params }: { params: { orderNumber: string } }) {
+//     try {
+//         await connect();
 
-        const orderNumber = params; // Directly access orderNumber without await in destructuring
-        // console.log("orderNumber:", orderNumber);
+//         const orderNumber = params;
+//         const orders = await Order.find({ orderNumber });
 
-        const orders = await Order.find({ orderNumber });
-
-        return NextResponse.json(orders);
-    } catch (error) {
-        console.error('Error fetching orders:', error);
-        return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });
-    }
-}
+//         return NextResponse.json(orders);
+//     } catch (error) {
+//         console.error('Error fetching orders:', error);
+//         return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });
+//     }
+// }

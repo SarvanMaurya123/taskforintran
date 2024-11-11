@@ -41,7 +41,7 @@ const UpdateOrder = ({ closeModal }: any) => {
         const fetchOrder = async () => {
             try {
                 console.log("orderNumber:", orderNumber)
-                const response = await axios.get(`/pages/api/orders/${orderNumber}`);
+                const response = await axios.get(`/pages/api/orders`);
                 console.log("response:", response)
                 setUpdatedOrder(response.data);
             } catch (err) {

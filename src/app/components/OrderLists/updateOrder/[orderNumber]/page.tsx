@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loader from '@/app/components/Loder';
 
 interface Customer {
@@ -26,11 +26,11 @@ interface Order {
     status: string;
 }
 
-interface UpdateOrderProps {
-    closeModal: () => void;
-}
+// interface UpdateOrderProps {
+//     closeModal: () => void;
+// }
 
-const UpdateOrder: React.FC<UpdateOrderProps> = ({ closeModal }) => {
+const UpdateOrder = ({ closeModal }: any) => {
     const [updatedOrder, setUpdatedOrder] = useState<Order | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
